@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types } from 'mongoose';
 
-export type VehicleCategory = 'Sedan' | 'SUV' | 'Luxury' | 'Sports' | 'Hatchback' | 'Electric';
+export type VehicleCategory = 'Sedan' | 'SUV' | 'Luxury' | 'Sports' | 'Hatchback' | 'Electric' | 'Bike';
 export type TransmissionType = 'Automatic' | 'Manual';
 export type FuelType = 'Petrol' | 'Diesel' | 'Electric' | 'Hybrid';
 export type OperationalStatus = 'Available' | 'Maintenance' | 'Retired';
@@ -43,7 +43,7 @@ const VehicleSchema = new Schema<IVehicle>(
     },
     category: {
       type: String,
-      enum: ['Sedan', 'SUV', 'Luxury', 'Sports', 'Hatchback', 'Electric'],
+      enum: ['Sedan', 'SUV', 'Luxury', 'Sports', 'Hatchback', 'Electric', 'Bike'],
       required: true,
       index: true
     },

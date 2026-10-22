@@ -9,7 +9,7 @@ export interface User {
   drivingLicense?: string;
 }
 
-export type VehicleCategory = 'Sedan' | 'SUV' | 'Luxury' | 'Sports' | 'Hatchback' | 'Electric';
+export type VehicleCategory = 'Sedan' | 'SUV' | 'Luxury' | 'Sports' | 'Hatchback' | 'Electric' | 'Bike';
 export type TransmissionType = 'Automatic' | 'Manual';
 export type FuelType = 'Petrol' | 'Diesel' | 'Electric' | 'Hybrid';
 export type OperationalStatus = 'Available' | 'Maintenance' | 'Retired';

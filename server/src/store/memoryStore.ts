@@ -220,6 +220,83 @@ class InMemoryStore {
         operationalStatus: 'Available',
         features: ['Ottoman Lounge Seats', 'Dual Sunroof', 'Toyota Safety Sense', 'Wireless Connectivity', 'Spacious 7-seater'],
         mileageLimitPerDay: 400
+      },
+      {
+        _id: 'veh_07',
+        make: 'Mahindra',
+        model: 'Thar 4x4 Hardtop',
+        year: 2024,
+        category: 'SUV',
+        description: 'Iconic Indian off-roader with mStallion Turbo-Petrol engine, 4x4 low-range gearbox, and convertible rugged aesthetics.',
+        images: [
+          'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1200&q=80',
+          'https://images.unsplash.com/photo-1506015391300-4802dc74de2e?auto=format&fit=crop&w=1200&q=80'
+        ],
+        registrationNumber: 'MH04-TR-4444',
+        transmission: 'Automatic',
+        fuelType: 'Petrol',
+        seatingCapacity: 4,
+        dailyRate: 4200,
+        operationalStatus: 'Available',
+        features: ['Mechanical Locking Differential', 'Roll Cage', 'Water-Resistant Infotainment', 'All-Terrain 18" Wheels'],
+        mileageLimitPerDay: 350
+      },
+      {
+        _id: 'veh_08',
+        make: 'Tata',
+        model: 'Safari Dark Edition',
+        year: 2024,
+        category: 'SUV',
+        description: 'Flagship Indian luxury 7-seater SUV with ADAS Level 2, ventilated seats, gesture tailgate, and Harman JBL sound.',
+        images: [
+          'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1200&q=80'
+        ],
+        registrationNumber: 'MH02-SF-7788',
+        transmission: 'Automatic',
+        fuelType: 'Diesel',
+        seatingCapacity: 7,
+        dailyRate: 4600,
+        operationalStatus: 'Available',
+        features: ['Level 2 ADAS', 'Ventilated 1st & 2nd Row', 'Parametric Jewel Grille', '360 3D Surround Camera'],
+        mileageLimitPerDay: 350
+      },
+      {
+        _id: 'veh_09',
+        make: 'Royal Enfield',
+        model: 'Himalayan 450',
+        year: 2024,
+        category: 'Bike',
+        description: 'High-performance adventure motorcycle with all-new liquid-cooled Sherpa 450 engine and Google Maps Tripper navigation.',
+        images: [
+          'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?auto=format&fit=crop&w=1200&q=80'
+        ],
+        registrationNumber: 'MH04-RE-4501',
+        transmission: 'Manual',
+        fuelType: 'Petrol',
+        seatingCapacity: 2,
+        dailyRate: 1800,
+        operationalStatus: 'Available',
+        features: ['Sherpa 452cc DOHC Engine', 'Switchable Rear ABS', 'Full TFT Display', 'Long-Travel Showa Suspension'],
+        mileageLimitPerDay: 300
+      },
+      {
+        _id: 'veh_10',
+        make: 'KTM',
+        model: '390 Duke ABS',
+        year: 2024,
+        category: 'Bike',
+        description: 'The Corner Rocket: track-bred naked street motorcycle with launch control, cornering MTC, and Quickshifter+.',
+        images: [
+          'https://images.unsplash.com/photo-1609630875171-b1321377ee65?auto=format&fit=crop&w=1200&q=80'
+        ],
+        registrationNumber: 'MH03-DK-3900',
+        transmission: 'Manual',
+        fuelType: 'Petrol',
+        seatingCapacity: 2,
+        dailyRate: 2200,
+        operationalStatus: 'Available',
+        features: ['Quickshifter+ (Bi-directional)', 'Cornering ABS & MTC', 'Launch Control Mode', 'WP APEX Adjustable Suspension'],
+        mileageLimitPerDay: 300
       }
     ];
 

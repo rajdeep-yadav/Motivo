@@ -195,7 +195,7 @@ export const HomePage: React.FC = () => {
 
             {/* Category Filter Pills */}
             <div className="flex flex-wrap gap-2 text-xs font-semibold">
-              {['All', 'Sedan', 'SUV', 'Electric', 'Sports', 'Luxury'].map((cat) => (
+              {['All', 'Sedan', 'SUV', 'Electric', 'Sports', 'Luxury', 'Bike'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
@@ -205,7 +205,7 @@ export const HomePage: React.FC = () => {
                       : 'border-[var(--border-fine)] bg-[var(--card-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
                   }`}
                 >
-                  {cat}
+                  {cat === 'Bike' ? 'Bikes & Adventure' : cat}
                 </button>
               ))}
             </div>

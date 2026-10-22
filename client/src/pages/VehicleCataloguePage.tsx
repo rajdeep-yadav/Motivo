@@ -210,6 +210,7 @@ export const VehicleCataloguePage: React.FC = () => {
                 <option value="Sports">Sports</option>
                 <option value="Electric">Electric</option>
                 <option value="Hatchback">Hatchback</option>
+                <option value="Bike">Bikes & Motorcycles</option>
               </select>
             </div>
 

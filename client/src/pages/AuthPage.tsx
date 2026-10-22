@@ -41,7 +41,11 @@ export const AuthPage: React.FC = () => {
 
       if (res.success && res.token && res.user) {
         login(res.token, res.user);
-        navigate(redirect);
+        if (res.user.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate(redirect === '/admin' ? '/dashboard' : redirect);
+        }
       }
     } catch (err: any) {
       setError(err.message || 'Authentication failed. Please verify credentials.');
