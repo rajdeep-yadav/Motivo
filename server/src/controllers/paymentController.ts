@@ -1,8 +1,10 @@
 import { Response } from 'express';
+import mongoose from 'mongoose';
 import { Payment } from '../models/Payment';
 import { Booking } from '../models/Booking';
 import { Notification } from '../models/Notification';
 import { AuthenticatedRequest } from '../middleware/auth';
+import { memoryStore } from '../store/memoryStore';
 
 const generateInvoiceNumber = (): string => {
   const rand = Math.floor(100000 + Math.random() * 900000);
@@ -14,9 +16,62 @@ export const createSimulatedPayment = async (req: AuthenticatedRequest, res: Res
     const customerId = req.user!._id;
     const { bookingId, paymentMethod = 'Card (Simulated)', outcome = 'Successful' } = req.body;
 
-    const booking = await Booking.findById(bookingId).populate('vehicle');
-    if (!booking) {
-      res.status(404).json({ success: false, message: 'Booking not found.' });
+    if (mongoose.connection.readyState !== 1) {
+      const b = memoryStore.bookings.find((bk) => bk._id === bookingId);
+      if (!b) {
+        res.status(404).json({ success: false, message: 'Booking not found.' });
+        return;
+      }
+      const isSuccess = outcome === 'Successful';
+      const paymentStatus = isSuccess ? 'Successful' : outcome === 'Pending' ? 'Pending' : 'Failed';
+      const txRef = `SIM-TX-${Date.now()}-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+      const invoiceNumber = generateInvoiceNumber();
+
+      const payment = {
+        _id: 'pay_' + Date.now(),
+        booking: b._id,
+        customer: (req.user as any).id || req.user!._id,
+        amount: b.priceBreakdown.totalAmount,
+        currency: 'INR',
+        paymentMethod,
+        status: paymentStatus,
+        transactionReference: txRef,
+        invoiceNumber,
+        createdAt: new Date().toISOString()
+      };
+
+      memoryStore.payments.unshift(payment);
+
+      if (isSuccess) {
+        b.paymentStatus = 'Paid';
+        if (b.status === 'Pending') b.status = 'Confirmed';
+        memoryStore.notifications.unshift({
+          _id: 'notif_' + Date.now(),
+          recipient: (req.user as any).id || req.user!._id,
+          type: 'PAYMENT_SUCCESSFUL',
+          title: 'Payment Successful (Simulated)',
+          message: `Your payment of ₹${b.priceBreakdown.totalAmount.toLocaleString('en-IN')} for ${b.bookingReference} has been verified. Invoice: ${invoiceNumber}`,
+          isRead: false,
+          createdAt: new Date().toISOString()
+        });
+      } else {
+        b.paymentStatus = 'Failed';
+        memoryStore.notifications.unshift({
+          _id: 'notif_' + Date.now(),
+          recipient: (req.user as any).id || req.user!._id,
+          type: 'PAYMENT_FAILED',
+          title: 'Payment Failed (Simulated)',
+          message: `Your simulated payment transaction ${txRef} could not be settled.`,
+          isRead: false,
+          createdAt: new Date().toISOString()
+        });
+      }
+
+      res.status(200).json({
+        success: isSuccess,
+        message: isSuccess ? 'Simulated payment succeeded.' : 'Simulated payment failed as requested.',
+        data: payment
+      });
       return;
     }
 

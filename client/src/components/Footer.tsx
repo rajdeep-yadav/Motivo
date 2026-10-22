@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Mail, MapPin, Phone, GitBranch, Terminal, Database, Code2 } from 'lucide-react';
+import { ShieldCheck, Mail, MapPin, GitBranch, Terminal, Database, Code2 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -61,15 +61,14 @@ export const Footer: React.FC = () => {
             <p className="text-xs text-[var(--text-secondary)] leading-relaxed max-w-sm">
               Motivo is a complete, production-ready vehicle rental management application created for a college Industry Practicals engineering project. Designed with strict server-side pricing rules, deterministic booking conflict prevention, and enterprise aesthetics.
             </p>
-            <div className="pt-2 space-y-1.5 text-xs text-[var(--text-secondary)]">
+            <div className="pt-2 space-y-2 text-xs text-[var(--text-secondary)]">
               <div className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[var(--accent-sage)]" /> Bangalore / Delhi NCR Fleet Terminals
+                <MapPin className="w-4 h-4 text-[var(--accent-sage)] shrink-0" />
+                <span className="font-medium text-[var(--text-primary)]">TCET Mumbai, Maharashtra, India</span>
               </div>
               <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[var(--accent-sage)]" /> support@motivo.com
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[var(--accent-sage)]" /> +91 98200 11223 (Admin Concierge)
+                <Mail className="w-4 h-4 text-[var(--accent-sage)] shrink-0" />
+                <span className="font-medium text-[var(--text-primary)]">zenovaontop@gmail.com</span>
               </div>
             </div>
           </div>

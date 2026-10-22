@@ -98,6 +98,19 @@ export const getDashboardStats = async (req: AuthenticatedRequest, res: Response
 
 export const getCustomers = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const customers = memoryStore.users.map((u) => ({
+        id: u.id,
+        _id: u.id,
+        name: u.name,
+        email: u.email,
+        phone: u.phone,
+        drivingLicense: u.drivingLicense,
+        role: u.role
+      }));
+      res.status(200).json({ success: true, data: customers });
+      return;
+    }
     const { search } = req.query;
     const query: any = { role: 'customer' };
 
@@ -119,6 +132,19 @@ export const getCustomers = async (req: AuthenticatedRequest, res: Response): Pr
 
 export const getReports = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      const sampleReport = [
+        { date: '17 Oct', revenue: 14000, bookings: 2 },
+        { date: '18 Oct', revenue: 19500, bookings: 2 },
+        { date: '19 Oct', revenue: 8500, bookings: 1 },
+        { date: '20 Oct', revenue: 24249, bookings: 3 },
+        { date: '21 Oct', revenue: 33630, bookings: 4 },
+        { date: '22 Oct', revenue: 42000, bookings: 5 },
+        { date: '23 Oct', revenue: 57879, bookings: 6 }
+      ];
+      res.status(200).json({ success: true, data: sampleReport });
+      return;
+    }
     // 7-day revenue and booking count trend
     const sevenDaysAgo = new Date();
     sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);

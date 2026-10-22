@@ -237,6 +237,10 @@ export const cancelBooking = async (req: AuthenticatedRequest, res: Response): P
 // Admin booking actions
 export const getAllBookings = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
+    if (mongoose.connection.readyState !== 1) {
+      res.status(200).json({ success: true, data: memoryStore.bookings });
+      return;
+    }
     const { status, search } = req.query;
     const query: any = {};
 
@@ -265,7 +269,18 @@ export const getAllBookings = async (req: AuthenticatedRequest, res: Response): 
 export const updateBookingStatus = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { status, rejectionReason } = req.body;
+    const { status } = req.body;
+
+    if (mongoose.connection.readyState !== 1) {
+      const b = memoryStore.bookings.find((bk) => bk._id === id);
+      if (!b) {
+        res.status(404).json({ success: false, message: 'Booking not found.' });
+        return;
+      }
+      b.status = status;
+      res.status(200).json({ success: true, message: `Booking status updated to ${status}.`, data: b });
+      return;
+    }
 
     const booking = await Booking.findById(id).populate('vehicle');
     if (!booking) {
