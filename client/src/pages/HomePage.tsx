@@ -7,7 +7,12 @@ import {
   Lock,
   Layers,
   Activity,
-  ChevronRight
+  ChevronRight,
+  ShieldCheck,
+  DollarSign,
+  Globe2,
+  CheckCircle,
+  Building2
 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
@@ -18,14 +23,14 @@ export const HomePage: React.FC = () => {
     totalVehicles: 8,
     availableNow: 7,
     activeRentals: 1,
-    totalRevenue: 28500
+    totalRevenue: 57879
   };
 
   useEffect(() => {
     const loadHomeData = async () => {
       try {
         const res = await apiRequest<{ success: boolean; data: Vehicle[] }>('/vehicles?limit=6');
-        if (res.success && res.data) {
+        if (res.success && res.data && res.data.length > 0) {
           setFeaturedVehicles(res.data);
         }
       } catch (err) {
@@ -43,39 +48,39 @@ export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen">
       
-      {/* 1. HERO SECTION (Understated Automotive Studio Design Language) */}
+      {/* 1. HERO SECTION (Billion-Dollar Mobility Aesthetic) */}
       <section className="relative pt-12 pb-24 border-b border-[var(--border-fine)] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Editorial Text Column */}
             <div className="lg:col-span-7 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-sm bg-[var(--surface-sage)]/70 border border-[var(--border-fine)] text-[11px] font-bold uppercase tracking-widest text-[var(--accent-sage)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-sage)] animate-pulse"></span>
-                Next-Generation Vehicle Rental Platform
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-sm bg-[var(--surface-sage)]/70 border border-[var(--border-fine)] text-[11px] font-bold uppercase tracking-widest text-[var(--accent-sage)] shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
+                Autonomous Fleet Infrastructure • TCET Mumbai
               </div>
 
-              <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.06]">
+              <h1 className="text-5xl sm:text-7xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.05]">
                 Simple rentals.<br />
                 <span className="text-[var(--accent-sage)]">Better journeys.</span>
               </h1>
 
               <p className="text-base sm:text-lg text-[var(--text-secondary)] max-w-xl leading-relaxed">
-                Motivo redefines automotive rental management with strict server-side 24-hour rate calculations, real-time vehicle telemetry availability, and zero rental counter friction.
+                Motivo provides an architectural enterprise platform powering modern executive fleet rentals. Built with authoritative 24-hour rate calculations, deterministic availability protection, and digital checkout telemetry.
               </p>
               
               <div className="pt-2 flex flex-wrap items-center gap-4">
                 <Link
                   to="/vehicles"
-                  className="bg-[var(--text-primary)] text-[var(--bg-main)] px-8 py-4 text-xs font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition shadow-md flex items-center gap-2"
+                  className="bg-[var(--text-primary)] text-[var(--bg-main)] px-8 py-4 text-xs font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition shadow-md flex items-center gap-2 cursor-pointer"
                 >
-                  Explore The Fleet <ArrowRight className="w-4 h-4" />
+                  Explore Fleet Collection <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
                   href="#experience"
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] hover:text-[var(--accent-sage)] px-5 py-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] hover:bg-[var(--surface-sage)] transition"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] hover:text-[var(--accent-sage)] px-5 py-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] hover:bg-[var(--surface-sage)] transition cursor-pointer"
                 >
-                  How It Works
+                  The Experience
                 </a>
               </div>
 
@@ -86,7 +91,7 @@ export const HomePage: React.FC = () => {
                   <span className="text-[var(--text-secondary)] text-[11px]">Exact 24h ceiling rules</span>
                 </div>
                 <div>
-                  <span className="font-bold text-[var(--text-primary)] block">Guaranteed Handovers</span>
+                  <span className="font-bold text-[var(--text-primary)] block">Instant Digital Delivery</span>
                   <span className="text-[var(--text-secondary)] text-[11px]">Strict atomic availability</span>
                 </div>
                 <div>
@@ -101,7 +106,7 @@ export const HomePage: React.FC = () => {
               <div className="relative rounded-sm border border-[var(--border-fine)] bg-[var(--surface-sage)] p-7 overflow-hidden shadow-sm">
                 <div className="flex justify-between items-center text-xs text-[var(--text-secondary)] font-mono mb-6">
                   <span className="font-bold text-[var(--text-primary)]">01 // AUTOMOTIVE STUDIO</span>
-                  <span className="uppercase tracking-widest px-2 py-0.5 rounded-xs bg-[var(--card-bg)] border border-[var(--border-fine)] text-[10px]">
+                  <span className="uppercase tracking-widest px-2.5 py-1 rounded-xs bg-[var(--card-bg)] border border-[var(--border-fine)] text-[10px] font-bold">
                     FLEET DISCOVERY
                   </span>
                 </div>
@@ -194,7 +199,7 @@ export const HomePage: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-sm border transition ${
+                  className={`px-3.5 py-1.5 rounded-sm border transition cursor-pointer ${
                     activeCategory === cat
                       ? 'bg-[var(--text-primary)] text-[var(--bg-main)] border-[var(--text-primary)] shadow-2xs'
                       : 'border-[var(--border-fine)] bg-[var(--card-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
@@ -238,7 +243,6 @@ export const HomePage: React.FC = () => {
                       {v.description}
                     </p>
 
-                    {/* Features snippet */}
                     <div className="mt-4 pt-3 border-t border-[var(--border-fine)] flex flex-wrap gap-1.5">
                       {v.features.slice(0, 3).map((f, i) => (
                         <span key={i} className="text-[10px] px-2 py-0.5 rounded-xs bg-[var(--surface-sage)]/60 text-[var(--text-secondary)] font-medium">
@@ -278,7 +282,167 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. ABOUT MOTIVO & INDUSTRY PRACTICALS ARCHITECTURAL MANIFESTO */}
+      {/* 3. BUSINESS MODEL & MONETIZATION ENGINE (BILLION-DOLLAR ENTERPRISE BREAKDOWN) */}
+      <section id="business-model" className="py-24 border-t border-[var(--border-fine)] bg-[var(--surface-sage)]/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-2">
+            <span className="text-xs uppercase tracking-widest font-bold text-[var(--accent-sage)]">
+              TRANSPARENT VALUE CREATION
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
+              How Motivo Operates & Generates Revenue
+            </h2>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
+              An institutional mobility model combining high-margin utilization with asset-backed software telemetry.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-8 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-4 shadow-xs">
+              <div className="w-12 h-12 rounded-sm bg-[var(--surface-sage)] flex items-center justify-center text-[var(--accent-sage)]">
+                <DollarSign className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">1. 24-Hour Rental Cycles</h3>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Base vehicle charges are calculated strictly in deterministic 24-hour windows with ceiling rounding. Every active vehicle generates predictable daily cashflows.
+              </p>
+              <div className="pt-2 border-t border-[var(--border-fine)] text-[11px] font-mono text-[var(--accent-sage)]">
+                Average Daily Yield: ₹7,800 / day
+              </div>
+            </div>
+
+            <div className="p-8 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-4 shadow-xs">
+              <div className="w-12 h-12 rounded-sm bg-[var(--surface-sage)] flex items-center justify-center text-[var(--accent-sage)]">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">2. Comprehensive Add-Ons</h3>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Zero-depreciation insurance (₹350/day), airport concierge deliveries, and child-seat hardware attachments create high-margin ancillary revenue streams.
+              </p>
+              <div className="pt-2 border-t border-[var(--border-fine)] text-[11px] font-mono text-[var(--accent-sage)]">
+                Ancillary Attach Rate: ~40%
+              </div>
+            </div>
+
+            <div className="p-8 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-4 shadow-xs">
+              <div className="w-12 h-12 rounded-sm bg-[var(--surface-sage)] flex items-center justify-center text-[var(--accent-sage)]">
+                <Building2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-lg font-bold text-[var(--text-primary)]">3. Enterprise Corporate Accounts</h3>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                Executive transport contracts for corporate campuses and multi-day conference mobility hubs provide predictable, high-volume fleet rotations.
+              </p>
+              <div className="pt-2 border-t border-[var(--border-fine)] text-[11px] font-mono text-[var(--accent-sage)]">
+                Enterprise Retention: ~92%
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. SECURITY & FLEET TELEMETRY STANDARDS */}
+      <section id="security-guarantee" className="py-24 border-t border-[var(--border-fine)] bg-[var(--bg-main)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-xs uppercase tracking-widest font-bold text-[var(--accent-sage)]">
+                ENTERPRISE SAFETY & STANDARDS
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-tight">
+                Institutional Safety.<br />Certified Vehicles.
+              </h2>
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                Motivo treats vehicle safety and customer data protection as foundational pillars. Every vehicle is GPS-tracked, electronically monitored, and backed by instantaneous simulated verification.
+              </p>
+
+              <div className="space-y-3 pt-2">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-700 shrink-0 mt-0.5">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">120-Point Multipoint Inspection</h4>
+                    <p className="text-xs text-[var(--text-secondary)]">Brakes, tires, fluids, powertrain electronics, and chassis inspected between rentals.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-700 shrink-0 mt-0.5">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">Encrypted Identity & License Storage</h4>
+                    <p className="text-xs text-[var(--text-secondary)]">Passwords hashed with Bcrypt, stateless JWT tokens, and strict customer ownership isolation.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center text-emerald-700 shrink-0 mt-0.5">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-bold text-[var(--text-primary)]">24/7 Roadside Assistance & Concierge</h4>
+                    <p className="text-xs text-[var(--text-secondary)]">Emergency dispatch and direct vehicle replacement support across Mumbai and NCR corridors.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6">
+              <div className="p-8 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] shadow-sm space-y-6">
+                <div className="flex justify-between items-center border-b border-[var(--border-fine)] pb-4">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[var(--text-primary)] flex items-center gap-2">
+                    <Globe2 className="w-4 h-4 text-[var(--accent-sage)]" /> Operating Terminal Network
+                  </span>
+                  <span className="text-xs font-mono font-bold text-emerald-600">● 4 Hubs Active</span>
+                </div>
+
+                <div className="space-y-4 text-xs">
+                  <div className="p-3 bg-[var(--surface-sage)]/40 rounded-sm border border-[var(--border-fine)] flex justify-between items-center">
+                    <div>
+                      <strong className="block text-[var(--text-primary)]">TCET Mumbai Mobility Hub</strong>
+                      <span className="text-[var(--text-secondary)]">Kandivali East, Mumbai</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-[var(--accent-sage)] font-bold">Base HQ</span>
+                  </div>
+
+                  <div className="p-3 bg-[var(--surface-sage)]/40 rounded-sm border border-[var(--border-fine)] flex justify-between items-center">
+                    <div>
+                      <strong className="block text-[var(--text-primary)]">Mumbai Chhatrapati Shivaji Airport T2</strong>
+                      <span className="text-[var(--text-secondary)]">Sahar, Andheri East</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-emerald-600 font-bold">Airport Concierge</span>
+                  </div>
+
+                  <div className="p-3 bg-[var(--surface-sage)]/40 rounded-sm border border-[var(--border-fine)] flex justify-between items-center">
+                    <div>
+                      <strong className="block text-[var(--text-primary)]">Bandra Kurla Complex (BKC) Terminal</strong>
+                      <span className="text-[var(--text-secondary)]">Financial District, Mumbai</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-[var(--accent-sage)] font-bold">Executive Hub</span>
+                  </div>
+
+                  <div className="p-3 bg-[var(--surface-sage)]/40 rounded-sm border border-[var(--border-fine)] flex justify-between items-center">
+                    <div>
+                      <strong className="block text-[var(--text-primary)]">South Mumbai Heritage Gateway</strong>
+                      <span className="text-[var(--text-secondary)]">Colaba, Mumbai</span>
+                    </div>
+                    <span className="font-mono text-[11px] text-[var(--accent-sage)] font-bold">Transit Node</span>
+                  </div>
+                </div>
+
+                <div className="p-3 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 rounded-sm text-[11px] text-emerald-800 dark:text-emerald-300">
+                  All terminal dispatches synchronize in real-time with Motivo's centralized Mongoose telemetry database.
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 5. ABOUT MOTIVO & INDUSTRY PRACTICALS ARCHITECTURAL MANIFESTO */}
       <section id="about-motivo" className="py-24 border-t border-[var(--border-fine)] bg-[var(--surface-sage)]/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -334,7 +498,7 @@ export const HomePage: React.FC = () => {
                   </div>
                   <div className="flex justify-between py-2 border-b border-[var(--border-fine)]">
                     <span className="font-semibold text-[var(--text-primary)]">Database Layer</span>
-                    <span className="text-[var(--text-secondary)] font-mono">MongoDB Atlas (Host: motivo.i7x6660.mongodb.net)</span>
+                    <span className="text-[var(--text-secondary)] font-mono">MongoDB Atlas (Host: motivo.i7x666o.mongodb.net)</span>
                   </div>
                   <div className="flex justify-between py-2 border-b border-[var(--border-fine)]">
                     <span className="font-semibold text-[var(--text-primary)]">Authentication</span>
@@ -356,7 +520,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. THE EXPERIENCE (Step-by-Step Flow) */}
+      {/* 6. THE EXPERIENCE (Step-by-Step Flow) */}
       <section id="experience" className="py-24 border-t border-[var(--border-fine)] bg-[var(--bg-main)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-16">
@@ -372,7 +536,7 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3">
+            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3 shadow-2xs">
               <span className="font-mono text-xs font-bold text-[var(--accent-sage)]">STEP 01</span>
               <h3 className="text-base font-bold text-[var(--text-primary)]">Vehicle Selection</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -380,7 +544,7 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3">
+            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3 shadow-2xs">
               <span className="font-mono text-xs font-bold text-[var(--accent-sage)]">STEP 02</span>
               <h3 className="text-base font-bold text-[var(--text-primary)]">Transparent Calculation</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -388,7 +552,7 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3">
+            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3 shadow-2xs">
               <span className="font-mono text-xs font-bold text-[var(--accent-sage)]">STEP 03</span>
               <h3 className="text-base font-bold text-[var(--text-primary)]">Simulated Settlement</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -396,7 +560,7 @@ export const HomePage: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3">
+            <div className="p-6 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)] space-y-3 shadow-2xs">
               <span className="font-mono text-xs font-bold text-[var(--accent-sage)]">STEP 04</span>
               <h3 className="text-base font-bold text-[var(--text-primary)]">Digital Handover</h3>
               <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -407,7 +571,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. CALL TO ACTION SECTION */}
+      {/* 7. CALL TO ACTION SECTION */}
       <section className="py-20 border-t border-[var(--border-fine)] bg-[var(--text-primary)] text-[var(--bg-main)]">
         <div className="max-w-5xl mx-auto px-4 text-center space-y-6">
           <span className="text-xs font-mono font-bold tracking-widest uppercase text-[var(--accent-sage)]">
@@ -422,7 +586,7 @@ export const HomePage: React.FC = () => {
           <div className="pt-2">
             <Link
               to="/vehicles"
-              className="inline-block px-8 py-4 bg-[var(--bg-main)] text-[var(--text-primary)] text-xs font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition shadow-lg"
+              className="inline-block px-8 py-4 bg-[var(--bg-main)] text-[var(--text-primary)] text-xs font-bold uppercase tracking-wider rounded-sm hover:opacity-90 transition shadow-lg cursor-pointer"
             >
               Start Your Rental Today
             </Link>
