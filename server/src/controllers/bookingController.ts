@@ -1,10 +1,12 @@
 import { Response } from 'express';
+import mongoose from 'mongoose';
 import { Booking, BookingStatus } from '../models/Booking';
 import { Vehicle } from '../models/Vehicle';
 import { Notification } from '../models/Notification';
 import { AuthenticatedRequest } from '../middleware/auth';
 import { PricingService } from '../services/pricingService';
 import { AvailabilityService } from '../services/availabilityService';
+import { memoryStore } from '../store/memoryStore';
 
 // Reference Generator: MOTIVO-YYYYMMDD-XXXX
 const generateBookingRef = (): string => {
@@ -28,6 +30,47 @@ export const createBooking = async (req: AuthenticatedRequest, res: Response): P
 
     if (returnDate <= pickup) {
       res.status(400).json({ success: false, message: 'Return date/time must be strictly after pickup date/time.' });
+      return;
+    }
+
+    // If MongoDB is not connected, handle in memoryStore
+    if (mongoose.connection.readyState !== 1) {
+      const v = memoryStore.vehicles.find((veh) => veh._id === vehicleId);
+      if (!v) {
+        res.status(404).json({ success: false, message: 'Vehicle not found.' });
+        return;
+      }
+      const priceBreakdown = PricingService.calculatePrice({
+        dailyRate: v.dailyRate,
+        pickupDateTime: pickup,
+        returnDateTime: returnDate,
+        includeInsurance: Boolean(includeInsurance)
+      });
+      const bookingReference = generateBookingRef();
+      const newBk = {
+        _id: 'bk_' + Date.now(),
+        bookingReference,
+        customer: (req.user as any).id || req.user!._id,
+        vehicle: v,
+        pickupDateTime: pickup.toISOString(),
+        returnDateTime: returnDate.toISOString(),
+        status: 'Pending',
+        paymentStatus: 'Unpaid',
+        priceBreakdown,
+        specialRequests,
+        createdAt: new Date().toISOString()
+      };
+      memoryStore.bookings.unshift(newBk);
+      memoryStore.notifications.unshift({
+        _id: 'notif_' + Date.now(),
+        recipient: (req.user as any).id || req.user!._id,
+        type: 'BOOKING_SUBMITTED',
+        title: 'Booking Submitted',
+        message: `Your booking for ${v.make} ${v.model} (${bookingReference}) has been received.`,
+        isRead: false,
+        createdAt: new Date().toISOString()
+      });
+      res.status(201).json({ success: true, message: 'Booking created successfully.', data: newBk });
       return;
     }
 
@@ -91,7 +134,13 @@ export const createBooking = async (req: AuthenticatedRequest, res: Response): P
 
 export const getMyBookings = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
-    const customerId = req.user!._id;
+    const customerId = (req.user as any).id || req.user!._id;
+    if (mongoose.connection.readyState !== 1) {
+      const bks = memoryStore.bookings.filter((b) => b.customer === customerId.toString());
+      res.status(200).json({ success: true, data: bks });
+      return;
+    }
+
     const bookings = await Booking.find({ customer: customerId })
       .populate('vehicle')
       .sort({ createdAt: -1 });

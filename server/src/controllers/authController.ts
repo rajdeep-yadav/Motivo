@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import { User, IUser } from '../models/User';
 import { AuthenticatedRequest } from '../middleware/auth';
+import { memoryStore } from '../store/memoryStore';
 
 const generateToken = (user: IUser): string => {
   const secret = process.env.JWT_SECRET || 'motivo_super_secure_academic_key_2026';
@@ -76,32 +78,63 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     const normalizedEmail = email.toLowerCase().trim();
-    const user = await User.findOne({ email: normalizedEmail }).select('+passwordHash');
+    
+    // Check if MongoDB is connected, else fallback to memory store
+    if (mongoose.connection.readyState === 1) {
+      const user = await User.findOne({ email: normalizedEmail }).select('+passwordHash');
+      if (!user) {
+        res.status(401).json({ success: false, message: 'Invalid credentials.' });
+        return;
+      }
+      const isMatch = await bcrypt.compare(password, user.passwordHash);
+      if (!isMatch) {
+        res.status(401).json({ success: false, message: 'Invalid credentials.' });
+        return;
+      }
+      const token = generateToken(user);
+      res.status(200).json({
+        success: true,
+        message: 'Logged in successfully.',
+        token,
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+          phone: user.phone,
+          drivingLicense: user.drivingLicense
+        }
+      });
+      return;
+    }
 
-    if (!user) {
+    // Memory store fallback
+    const memUser = memoryStore.users.find((u) => u.email.toLowerCase() === normalizedEmail);
+    if (!memUser) {
       res.status(401).json({ success: false, message: 'Invalid credentials.' });
       return;
     }
 
-    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    const isMatch = await bcrypt.compare(password, memUser.passwordHash);
     if (!isMatch) {
       res.status(401).json({ success: false, message: 'Invalid credentials.' });
       return;
     }
 
-    const token = generateToken(user);
+    const secret = process.env.JWT_SECRET || 'motivo_super_secure_academic_key_2026';
+    const token = jwt.sign({ id: memUser.id, role: memUser.role }, secret, { expiresIn: '7d' });
 
     res.status(200).json({
       success: true,
       message: 'Logged in successfully.',
       token,
       user: {
-        id: user._id,
-        name: user.name,
-        email: user.email,
-        role: user.role,
-        phone: user.phone,
-        drivingLicense: user.drivingLicense
+        id: memUser.id,
+        name: memUser.name,
+        email: memUser.email,
+        role: memUser.role,
+        phone: memUser.phone,
+        drivingLicense: memUser.drivingLicense
       }
     });
   } catch (error: any) {
@@ -119,7 +152,7 @@ export const getMe = async (req: AuthenticatedRequest, res: Response): Promise<v
     res.status(200).json({
       success: true,
       user: {
-        id: req.user._id,
+        id: (req.user as any).id || req.user._id,
         name: req.user.name,
         email: req.user.email,
         role: req.user.role,

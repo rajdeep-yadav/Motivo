@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import { Vehicle } from '../models/Vehicle';
 import { AvailabilityService } from '../services/availabilityService';
+import { memoryStore } from '../store/memoryStore';
 
 export const getVehicles = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -78,6 +80,30 @@ export const getVehicles = async (req: Request, res: Response): Promise<void> =>
     const limitNum = Math.max(1, parseInt(limit as string, 10) || 9);
     const skip = (pageNum - 1) * limitNum;
 
+    // If MongoDB is not connected, serve seamlessly from memoryStore
+    if (mongoose.connection.readyState !== 1) {
+      let filtered = [...memoryStore.vehicles];
+      if (category && category !== 'All') {
+        filtered = filtered.filter((v) => v.category === category);
+      }
+      if (transmission && transmission !== 'All') {
+        filtered = filtered.filter((v) => v.transmission === transmission);
+      }
+      if (fuelType && fuelType !== 'All') {
+        filtered = filtered.filter((v) => v.fuelType === fuelType);
+      }
+      if (search && typeof search === 'string') {
+        const s = search.toLowerCase();
+        filtered = filtered.filter((v) => v.make.toLowerCase().includes(s) || v.model.toLowerCase().includes(s));
+      }
+      res.status(200).json({
+        success: true,
+        data: filtered,
+        pagination: { page: 1, limit: filtered.length, total: filtered.length, totalPages: 1 }
+      });
+      return;
+    }
+
     const [vehicles, total] = await Promise.all([
       Vehicle.find(query).sort(sortOptions).skip(skip).limit(limitNum),
       Vehicle.countDocuments(query)
@@ -101,6 +127,16 @@ export const getVehicles = async (req: Request, res: Response): Promise<void> =>
 export const getVehicleById = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
+    if (mongoose.connection.readyState !== 1) {
+      const v = memoryStore.vehicles.find((veh) => veh._id === id);
+      if (!v) {
+        res.status(404).json({ success: false, message: 'Vehicle not found.' });
+        return;
+      }
+      res.status(200).json({ success: true, data: v });
+      return;
+    }
+
     const vehicle = await Vehicle.findById(id);
 
     if (!vehicle) {

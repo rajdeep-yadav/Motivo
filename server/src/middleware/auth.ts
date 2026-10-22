@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 import { User, IUser } from '../models/User';
+import { memoryStore } from '../store/memoryStore';
 
 export interface AuthenticatedRequest extends Request {
   user?: IUser;
@@ -30,9 +32,26 @@ export const authenticate = async (
     }
 
     const secret = process.env.JWT_SECRET || 'motivo_super_secure_academic_key_2026';
-    const decoded = jwt.verify(token, secret) as { id: string };
+    const decoded = jwt.verify(token, secret) as { id: string; role: string };
 
-    const user = await User.findById(decoded.id);
+    let user: any = null;
+    if (mongoose.connection.readyState === 1) {
+      user = await User.findById(decoded.id);
+    } else {
+      const memUser = memoryStore.users.find((u) => u.id === decoded.id);
+      if (memUser) {
+        user = {
+          _id: memUser.id,
+          id: memUser.id,
+          name: memUser.name,
+          email: memUser.email,
+          role: memUser.role,
+          phone: memUser.phone,
+          drivingLicense: memUser.drivingLicense
+        };
+      }
+    }
+
     if (!user) {
       res.status(401).json({
         success: false,
