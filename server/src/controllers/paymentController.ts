@@ -75,6 +75,12 @@ export const createSimulatedPayment = async (req: AuthenticatedRequest, res: Res
       return;
     }
 
+    const booking = await Booking.findById(bookingId).populate('vehicle');
+    if (!booking) {
+      res.status(404).json({ success: false, message: 'Booking not found.' });
+      return;
+    }
+
     // Customer ownership check
     if (
       req.user!.role !== 'admin' &&

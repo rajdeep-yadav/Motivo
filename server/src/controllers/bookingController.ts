@@ -269,7 +269,7 @@ export const getAllBookings = async (req: AuthenticatedRequest, res: Response): 
 export const updateBookingStatus = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
-    const { status } = req.body;
+    const { status, rejectionReason } = req.body;
 
     if (mongoose.connection.readyState !== 1) {
       const b = memoryStore.bookings.find((bk) => bk._id === id);
