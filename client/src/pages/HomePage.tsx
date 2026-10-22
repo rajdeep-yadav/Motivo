@@ -145,28 +145,28 @@ export const HomePage: React.FC = () => {
 
           {/* Metric Bar matching screenshot footer indicators */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-16 pt-10 border-t border-[var(--border-fine)]">
-            <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+            <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
               <p className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Total Fleet</p>
               <h3 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] mt-1 font-mono">
                 {stats.totalVehicles}
               </h3>
               <span className="text-[10px] text-emerald-600 font-medium">Verified active registry</span>
             </div>
-            <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+            <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
               <p className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Available Now</p>
               <h3 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] mt-1 font-mono">
                 {stats.availableNow}
               </h3>
               <span className="text-[10px] text-emerald-600 font-medium">Ready for immediate pickup</span>
             </div>
-            <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+            <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
               <p className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Active Rentals</p>
               <h3 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] mt-1 font-mono">
                 {stats.activeRentals}
               </h3>
               <span className="text-[10px] text-[var(--accent-sage)] font-medium">Currently in journey</span>
             </div>
-            <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+            <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
               <p className="text-xs text-[var(--text-secondary)] font-semibold uppercase tracking-wider">Settled Turnover</p>
               <h3 className="text-3xl font-bold tracking-tight text-[var(--text-primary)] mt-1 font-mono">
                 ₹{stats.totalRevenue.toLocaleString('en-IN')}
@@ -199,10 +199,10 @@ export const HomePage: React.FC = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-sm border transition cursor-pointer ${
+                  className={`motivo-btn px-3.5 py-1.5 rounded-sm border cursor-pointer ${
                     activeCategory === cat
                       ? 'bg-[var(--text-primary)] text-[var(--bg-main)] border-[var(--text-primary)] shadow-2xs'
-                      : 'border-[var(--border-fine)] bg-[var(--card-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)]'
+                      : 'border-[var(--border-fine)] bg-[var(--card-bg)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-sage)]'
                   }`}
                 >
                   {cat === 'Bike' ? 'Bikes & Adventure' : cat}
@@ -215,18 +215,18 @@ export const HomePage: React.FC = () => {
             {filteredFleet.map((v) => (
               <div
                 key={v._id}
-                className="rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] overflow-hidden flex flex-col group hover:border-[var(--accent-sage)] hover:shadow-lg transition-all duration-300"
+                className="motivo-card rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] overflow-hidden flex flex-col group hover:border-[var(--accent-sage)]"
               >
                 <div className="h-52 overflow-hidden bg-[var(--surface-sage)] relative">
                   <img
                     src={v.images[0] || 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80'}
                     alt={`${v.make} ${v.model}`}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute top-3 left-3 bg-[var(--bg-main)]/90 backdrop-blur-xs px-2.5 py-1 text-[11px] font-mono font-bold text-[var(--text-primary)] rounded-sm border border-[var(--border-fine)]">
+                  <div className="absolute top-3 left-3 bg-[var(--bg-main)]/90 backdrop-blur-xs px-2.5 py-1 text-[11px] font-mono font-bold text-[var(--text-primary)] rounded-sm border border-[var(--border-fine)] shadow-2xs">
                     {v.registrationNumber}
                   </div>
-                  <div className="absolute top-3 right-3 bg-[var(--text-primary)] text-[var(--bg-main)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-sm">
+                  <div className="absolute top-3 right-3 bg-[var(--text-primary)] text-[var(--bg-main)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-sm shadow-2xs">
                     {v.category}
                   </div>
                 </div>
@@ -234,7 +234,7 @@ export const HomePage: React.FC = () => {
                 <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
                   <div>
                     <div className="flex justify-between items-baseline">
-                      <h3 className="text-xl font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-sage)] transition-colors">
+                      <h3 className="text-xl font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-sage)] transition-colors duration-200">
                         {v.make} {v.model}
                       </h3>
                       <span className="text-xs font-mono text-[var(--text-secondary)]">{v.year}</span>
@@ -245,7 +245,7 @@ export const HomePage: React.FC = () => {
 
                     <div className="mt-4 pt-3 border-t border-[var(--border-fine)] flex flex-wrap gap-1.5">
                       {v.features.slice(0, 3).map((f, i) => (
-                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-xs bg-[var(--surface-sage)]/60 text-[var(--text-secondary)] font-medium">
+                        <span key={i} className="text-[10px] px-2 py-0.5 rounded-xs bg-[var(--surface-sage)]/60 text-[var(--text-secondary)] font-medium transition-colors hover:bg-[var(--surface-sage)]">
                           {f}
                         </span>
                       ))}
@@ -261,7 +261,7 @@ export const HomePage: React.FC = () => {
                     </div>
                     <Link
                       to={`/vehicles/${v._id}`}
-                      className="bg-[var(--text-primary)] text-[var(--bg-main)] text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-sm hover:opacity-90 transition shadow-2xs"
+                      className="motivo-btn bg-[var(--text-primary)] text-[var(--bg-main)] text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-sm hover:opacity-90 shadow-2xs"
                     >
                       Reserve Vehicle
                     </Link>
@@ -462,7 +462,7 @@ export const HomePage: React.FC = () => {
               </p>
 
               <div className="grid grid-cols-2 gap-4 pt-4">
-                <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+                <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
                   <div className="text-[var(--accent-sage)] mb-2 font-bold flex items-center gap-1.5 text-xs">
                     <Activity className="w-4 h-4" /> Real-Time Telemetry
                   </div>
@@ -470,7 +470,7 @@ export const HomePage: React.FC = () => {
                     Accurate vehicle fleet registry keeping availability status updated across date-ranges.
                   </p>
                 </div>
-                <div className="p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
+                <div className="motivo-card p-4 rounded-sm bg-[var(--card-bg)] border border-[var(--border-fine)]">
                   <div className="text-[var(--accent-sage)] mb-2 font-bold flex items-center gap-1.5 text-xs">
                     <Lock className="w-4 h-4" /> Concurrency Safe
                   </div>

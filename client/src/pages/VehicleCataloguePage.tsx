@@ -318,19 +318,19 @@ export const VehicleCataloguePage: React.FC = () => {
                 {vehicles.map((v) => (
                   <div
                     key={v._id}
-                    className="rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] flex flex-col overflow-hidden group hover:border-[var(--accent-sage)] transition"
+                    className="motivo-card rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] flex flex-col overflow-hidden group hover:border-[var(--accent-sage)]"
                   >
                     <div className="h-44 bg-[var(--surface-sage)] relative overflow-hidden">
                       <img
                         src={v.images[0] || 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80'}
                         alt={`${v.make} ${v.model}`}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                        className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                         onError={(e) => {
                           // Fallback on broken remote images
                           (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80';
                         }}
                       />
-                      <span className="absolute top-2 right-2 text-[10px] font-semibold tracking-wider px-2 py-0.5 rounded-sm bg-[var(--bg-main)]/90 backdrop-blur border border-[var(--border-fine)] text-[var(--text-primary)]">
+                      <span className="absolute top-2 right-2 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-sm bg-[var(--bg-main)]/90 backdrop-blur-xs border border-[var(--border-fine)] text-[var(--text-primary)] shadow-2xs">
                         {v.category}
                       </span>
                     </div>
@@ -338,7 +338,7 @@ export const VehicleCataloguePage: React.FC = () => {
                     <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                       <div>
                         <div className="flex justify-between items-baseline">
-                          <h3 className="text-base font-bold text-[var(--text-primary)]">
+                          <h3 className="text-base font-bold text-[var(--text-primary)] group-hover:text-[var(--accent-sage)] transition-colors duration-200">
                             {v.make} {v.model}
                           </h3>
                           <span className="text-xs font-mono text-[var(--text-secondary)]">{v.year}</span>
@@ -367,7 +367,7 @@ export const VehicleCataloguePage: React.FC = () => {
                         </div>
                         <Link
                           to={`/vehicles/${v._id}`}
-                          className="bg-[var(--text-primary)] text-[var(--bg-main)] text-xs font-medium px-4 py-2 rounded-sm hover:opacity-90 transition"
+                          className="motivo-btn bg-[var(--text-primary)] text-[var(--bg-main)] text-xs font-semibold px-4 py-2 rounded-sm hover:opacity-90 shadow-2xs"
                         >
                           View Details
                         </Link>

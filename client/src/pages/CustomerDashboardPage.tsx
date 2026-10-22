@@ -297,21 +297,21 @@ export const CustomerDashboardPage: React.FC = () => {
           <span className="text-2xl font-bold font-mono text-[var(--text-primary)]">{bookings.length} Bookings</span>
           <span className="text-[10px] text-emerald-600 font-medium block mt-1">Lifetime fleet history</span>
         </div>
-        <div className="p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
+        <div className="motivo-card p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
           <span className="text-[10px] text-[var(--text-secondary)] uppercase font-semibold block">Active Rental</span>
           <span className="text-2xl font-bold font-mono text-blue-600">
             {bookings.filter((b) => b.status === 'Active').length} Live
           </span>
           <span className="text-[10px] text-[var(--text-secondary)] block mt-1">Range Rover Velar on journey</span>
         </div>
-        <div className="p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
+        <div className="motivo-card p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
           <span className="text-[10px] text-[var(--text-secondary)] uppercase font-semibold block">Upcoming Dispatches</span>
           <span className="text-2xl font-bold font-mono text-[var(--accent-sage)]">
             {bookings.filter((b) => b.status === 'Confirmed' || b.status === 'Pending').length} Reserved
           </span>
           <span className="text-[10px] text-[var(--text-secondary)] block mt-1">Verified reservations</span>
         </div>
-        <div className="p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
+        <div className="motivo-card p-4 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-2xs">
           <span className="text-[10px] text-[var(--text-secondary)] uppercase font-semibold block">Terminal Base</span>
           <span className="text-sm font-bold text-[var(--text-primary)] block mt-1">TCET Mumbai Hub</span>
           <span className="text-[10px] text-emerald-600 font-medium block">Priority airport handover tier</span>
@@ -347,7 +347,7 @@ export const CustomerDashboardPage: React.FC = () => {
           {bookings.map((b) => (
             <div
               key={b._id}
-              className="p-6 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs flex flex-col md:flex-row justify-between gap-6 hover:border-[var(--accent-sage)] transition"
+              className="motivo-card p-6 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs flex flex-col md:flex-row justify-between gap-6 hover:border-[var(--accent-sage)]"
             >
               <div className="space-y-3 flex-1">
                 <div className="flex flex-wrap items-center gap-3">
@@ -430,7 +430,7 @@ export const CustomerDashboardPage: React.FC = () => {
                   {b.paymentStatus !== 'Paid' && !['Cancelled', 'Rejected'].includes(b.status) && (
                     <button
                       onClick={() => setPayingBooking(b)}
-                      className="px-4 py-2.5 text-xs font-bold uppercase tracking-wider bg-emerald-700 text-white rounded-sm hover:bg-emerald-800 transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      className="motivo-btn px-4 py-2.5 text-xs font-bold uppercase tracking-wider bg-emerald-700 text-white rounded-sm hover:bg-emerald-800 flex items-center gap-1.5 shadow-xs cursor-pointer"
                     >
                       <CreditCard className="w-3.5 h-3.5" /> Pay (Simulated)
                     </button>
@@ -447,7 +447,7 @@ export const CustomerDashboardPage: React.FC = () => {
                           status: 'Successful'
                         });
                       }}
-                      className="px-3 py-1.5 text-xs font-semibold border border-[var(--border-fine)] text-[var(--text-primary)] rounded-sm hover:bg-[var(--surface-sage)] transition cursor-pointer"
+                      className="motivo-btn px-3 py-1.5 text-xs font-semibold border border-[var(--border-fine)] text-[var(--text-primary)] rounded-sm hover:bg-[var(--surface-sage)] cursor-pointer"
                     >
                       View Invoice
                     </button>

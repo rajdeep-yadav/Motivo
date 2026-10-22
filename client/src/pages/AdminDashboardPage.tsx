@@ -190,7 +190,7 @@ export const AdminDashboardPage: React.FC = () => {
           
           {/* Metrics Tiles */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            <div className="p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
+            <div className="motivo-card p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
               <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 font-semibold">
                 <Car className="w-4 h-4 text-[var(--accent-sage)]" /> Total Fleet
               </span>
@@ -198,7 +198,7 @@ export const AdminDashboardPage: React.FC = () => {
               <p className="text-[11px] text-emerald-600 font-medium mt-1">{stats?.availableVehicles ?? 7} operational & ready</p>
             </div>
 
-            <div className="p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
+            <div className="motivo-card p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
               <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 font-semibold">
                 <Calendar className="w-4 h-4 text-[var(--accent-sage)]" /> Active Rentals
               </span>
@@ -206,7 +206,7 @@ export const AdminDashboardPage: React.FC = () => {
               <p className="text-[11px] text-[var(--accent-sage)] font-medium mt-1">{stats?.pendingBookings ?? 0} pending dispatch</p>
             </div>
 
-            <div className="p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
+            <div className="motivo-card p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
               <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 font-semibold">
                 <Users className="w-4 h-4 text-[var(--accent-sage)]" /> Client Accounts
               </span>
@@ -214,7 +214,7 @@ export const AdminDashboardPage: React.FC = () => {
               <p className="text-[11px] text-[var(--text-secondary)] font-medium mt-1">Verified driver licenses</p>
             </div>
 
-            <div className="p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
+            <div className="motivo-card p-5 rounded-sm border border-[var(--border-fine)] bg-[var(--card-bg)] shadow-xs">
               <span className="text-xs text-[var(--text-secondary)] flex items-center gap-1.5 font-semibold">
                 <DollarSign className="w-4 h-4 text-[var(--accent-sage)]" /> Realized Turnover
               </span>
