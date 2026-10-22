@@ -4,9 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/server.ts",
+    "dev": "nodemon src/server.ts",
+    "dev:js": "nodemon dist/server.js",
     "build": "tsc",
     "start": "node dist/server.js",
+    "start:js": "node dist/server.js",
     "seed": "ts-node src/utils/seed.ts",
     "test": "jest"
   },
