@@ -1,23 +1,26 @@
 {
-  "name": "motivo",
-  "version": "1.0.0",
-  "description": "Motivo - Full-Stack Vehicle Rental Management System",
-  "scripts": {
-    "dev": "npm run dev --prefix client",
-    "server": "npm run dev --prefix server",
-    "seed": "npm run seed --prefix server",
-    "test": "npm test --prefix server",
-    "build:client": "npm run build --prefix client",
-    "build:server": "npm run build --prefix server"
-  },
-  "keywords": [
-    "vehicle-rental",
-    "full-stack",
-    "react",
-    "typescript",
-    "express",
-    "mongodb"
-  ],
-  "author": "Rajdeep Yadav",
-  "license": "ISC"
+    "name":  "motivo",
+    "version":  "1.0.0",
+    "description":  "Motivo - Full-Stack Vehicle Rental Management System",
+    "scripts":  {
+                    "dev":  "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run start --prefix server\" \"npm run dev --prefix client\"",
+                    "server":  "npm run start --prefix server",
+                    "seed":  "npm run seed --prefix server",
+                    "test":  "npm test --prefix server",
+                    "build:client":  "npm run build --prefix client",
+                    "build:server":  "npm run build --prefix server"
+                },
+    "keywords":  [
+                     "vehicle-rental",
+                     "full-stack",
+                     "react",
+                     "typescript",
+                     "express",
+                     "mongodb"
+                 ],
+    "author":  "Rajdeep Yadav",
+    "license":  "ISC",
+    "devDependencies":  {
+                            "concurrently":  "^10.0.6"
+                        }
 }
